@@ -7,6 +7,7 @@ include_directories(${FMT_INCLUDE_DIRS})
 set(utility_SRCS
 	base64.h
 	base64.cpp
+	expected.h
 	hash.h
 	ioc_container.h
 	ioc_container.cpp

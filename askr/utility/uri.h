@@ -43,105 +43,105 @@ class uri
 {
 public:
     /**
-   * 构造函数
-   * @param sv 字符串
-   */
+     * 构造函数
+     * @param sv 字符串
+     */
     explicit uri(std::string_view str);
 
     /**
-   * 获取scheme
-   * @return scheme
-   */
+     * 获取scheme
+     * @return scheme
+     */
     std::string_view scheme() const
     {
         return scheme_;
     }
 
     /**
-   * 获取username
-   * @return username
-   */
+     * 获取username
+     * @return username
+     */
     std::string_view username() const
     {
         return username_;
     }
 
     /**
-   * 获取password
-   * @return password
-   */
+     * 获取password
+     * @return password
+     */
     std::string_view password() const
     {
         return password_;
     }
 
     /**
-   * 获取host
-   * @return host
-   */
+     * 获取host
+     * @return host
+     */
     std::string_view host() const
     {
         return host_;
     }
 
     /**
-   * 获取port
-   * @return port
-   */
+     * 获取port
+     * @return port
+     */
     uint16_t port() const
     {
         return port_;
     }
 
     /**
-   * 获取path
-   * @return path
-   */
+     * 获取path
+     * @return path
+     */
     std::string_view path() const
     {
         return path_;
     }
 
     /**
-   * 获取query
-   * @return query
-   */
+     * 获取query
+     * @return query
+     */
     std::string_view query() const
     {
         return query_;
     }
 
     /**
-   * 获取fragment
-   * @return fragment
-   */
+     * 获取fragment
+     * @return fragment
+     */
     std::string_view fragment() const
     {
         return fragment_;
     }
 
     /**
-   * 获取hostname
-   * @return hostname
-   */
+     * 获取hostname
+     * @return hostname
+     */
     std::string hostname() const;
 
     /**
-   * 获取authority
-   * @return authority
-   */
+     * 获取authority
+     * @return authority
+     */
     std::string authority() const;
 
     /**
-   * 转换为字符串
-   * @return uri string
-   */
+     * 转换为字符串
+     * @return uri string
+     */
     std::string to_string() const;
 
     /**
-   *  设置端口号
-   * @param port 端口号
-   */
+     *  设置端口号
+     * @param port 端口号
+     */
     void set_port(uint16_t port)
     {
         has_authority_ = true;
@@ -149,9 +149,9 @@ public:
     }
 
     /**
-   * 获取query params
-   * @return query params
-   */
+     * 获取query params
+     * @return query params
+     */
     const std::vector<std::pair<std::string, std::string>> &query_params();
 
 private:

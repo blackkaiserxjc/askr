@@ -1,7 +1,3 @@
-//
-// Created by kaiser on 2021/1/1.
-//
-
 #include <iostream>
 
 #include <askr/utility/auto_timer.h>

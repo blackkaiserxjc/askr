@@ -36,7 +36,6 @@ struct Car
     void Func() const
     {
         std::cout << __FUNCTION__ << std::endl;
-        std::cout << "i:" << i << " f:" << f << " str:" << str << std::endl;
     }
     int i;
     float f;

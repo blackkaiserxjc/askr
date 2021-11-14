@@ -3,6 +3,7 @@ find_package(fmt CONFIG REQUIRED)
 find_package(Threads REQUIRED)
 
 set(askr_utility_unittest_SRCS
+    expected_unittest.cpp 
     hash_unittest.cpp
     random_unittest.cpp
     string_unittest.cpp
