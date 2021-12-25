@@ -14,7 +14,6 @@ struct Derivedb : public Interface
 {
     void Func() override
     {
-        std::cout << __FUNCTION__ << std::endl;
     }
 };
 
@@ -22,7 +21,6 @@ struct Bus
 {
     void Func() const
     {
-        std::cout << __FUNCTION__ << std::endl;
     }
 };
 
@@ -35,7 +33,6 @@ struct Car
 
     void Func() const
     {
-        std::cout << __FUNCTION__ << std::endl;
     }
     int i;
     float f;

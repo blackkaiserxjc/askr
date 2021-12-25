@@ -15,6 +15,7 @@ set(utility_SRCS
 	murmurhash.cpp
 	random.h
 	random.cpp
+	span.h
 	string.h
 	string.cpp
 	uri.h

@@ -7,6 +7,7 @@ set(askr_utility_unittest_SRCS
     hash_unittest.cpp
     random_unittest.cpp
     string_unittest.cpp
+    span_unittest.cpp
     uri_unittest.cpp
     unittest_main.cpp
     ioc_unittest.cpp
