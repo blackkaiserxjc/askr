@@ -1,6 +1,7 @@
-#include <boost/test/unit_test.hpp>
+#include <type_traits>
 
 #include <askr/utility/span.h>
+#include <boost/test/unit_test.hpp>
 
 BOOST_AUTO_TEST_SUITE(SpanTest)
 
@@ -220,14 +221,11 @@ BOOST_AUTO_TEST_CASE(SubSpanRangeCount)
 BOOST_AUTO_TEST_CASE(TestEmpty)
 {
     int a[4];
-    {
-        BOOST_TEST(askr::span<int>().empty());
-        BOOST_TEST(!askr::span<int>(&a[0], 4).empty());
-    }
-    {
-        BOOST_TEST((askr::span<int, 0>().empty()));
-        BOOST_TEST((!askr::span<int, 4>(&a[0], 4).empty()));
-    }
+    BOOST_TEST(askr::span<int>().empty());
+    BOOST_TEST(!askr::span<int>(&a[0], 4).empty());
+
+    BOOST_TEST((askr::span<int, 0>().empty()));
+    BOOST_TEST((!askr::span<int, 4>(&a[0], 4).empty()));
 }
 
 BOOST_AUTO_TEST_CASE(TestFrontBack)
@@ -248,6 +246,66 @@ BOOST_AUTO_TEST_CASE(TestIterator)
     BOOST_CHECK_EQUAL((askr::span<int>(&a[0], 4).rend().base()), &a[0]);
     BOOST_CHECK_EQUAL((std::begin(askr::span<int>(&a[0], 4))), &a[0]);
     BOOST_CHECK_EQUAL((std::end(askr::span<int>(&a[0], 4))), &a[4]);
+}
+
+BOOST_AUTO_TEST_CASE(ElementType)
+{
+    static_assert(std::is_same<askr::span<int>::element_type, int>::value);
+    static_assert(std::is_same<askr::span<char>::element_type, char>::value);
+}
+
+BOOST_AUTO_TEST_CASE(ValueType)
+{
+    static_assert(std::is_same<askr::span<char>::value_type, char>::value);
+    static_assert(std::is_same<askr::span<int>::value_type, int>::value);
+    static_assert(std::is_same<askr::span<const int>::value_type, int>::value);
+    static_assert(std::is_same<askr::span<volatile int>::value_type, int>::value);
+    static_assert(std::is_same<askr::span<const volatile int>::value_type, int>::value);
+}
+
+BOOST_AUTO_TEST_CASE(SizeType)
+{
+    static_assert(std::is_same<askr::span<char>::size_type, std::size_t>::value);
+    static_assert(std::is_same<askr::span<int>::size_type, std::size_t>::value);
+}
+
+BOOST_AUTO_TEST_CASE(DifferenceType)
+{
+    static_assert(std::is_same<askr::span<char>::difference_type, std::ptrdiff_t>::value);
+    static_assert(std::is_same<askr::span<int>::difference_type, std::ptrdiff_t>::value);
+}
+
+BOOST_AUTO_TEST_CASE(Pointer)
+{
+    static_assert(std::is_same<askr::span<char>::pointer, char *>::value);
+    static_assert(std::is_same<askr::span<int>::pointer, int *>::value);
+
+    static_assert(std::is_same<askr::span<char>::const_pointer, const char *>::value);
+    static_assert(std::is_same<askr::span<int>::const_pointer, const int *>::value);
+}
+
+BOOST_AUTO_TEST_CASE(Reference)
+{
+    static_assert(std::is_same<askr::span<char>::reference, char &>::value);
+    static_assert(std::is_same<askr::span<int>::reference, int &>::value);
+
+    static_assert(std::is_same<askr::span<char>::const_reference, const char &>::value);
+    static_assert(std::is_same<askr::span<int>::const_reference, const int &>::value);
+}
+
+BOOST_AUTO_TEST_CASE(Iterator)
+{
+    static_assert(std::is_same<askr::span<char>::iterator, char *>::value);
+    static_assert(std::is_same<askr::span<int>::iterator, int *>::value);
+
+    static_assert(std::is_same<askr::span<char>::const_iterator, const char *>::value);
+    static_assert(std::is_same<askr::span<int>::const_iterator, const int *>::value);
+
+    static_assert(std::is_same<askr::span<char>::reverse_iterator, std::reverse_iterator<char *>>::value);
+    static_assert(std::is_same<askr::span<int>::reverse_iterator, std::reverse_iterator<int *>>::value);
+
+    static_assert(std::is_same<askr::span<char>::const_reverse_iterator, std::reverse_iterator<const char *>>::value);
+    static_assert(std::is_same<askr::span<int>::const_reverse_iterator, std::reverse_iterator<const int *>>::value);
 }
 
 BOOST_AUTO_TEST_SUITE_END()
