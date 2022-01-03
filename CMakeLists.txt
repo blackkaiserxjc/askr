@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 
+project(askr LANGUAGES CXX)
+
 if (POLICY CMP0054)
     cmake_policy(SET CMP0054 NEW)
 endif()
@@ -8,15 +10,21 @@ if (POLICY CMP0057)
     cmake_policy(SET CMP0057 NEW)
 endif()
 
-project(askr LANGUAGES CXX)
-
 #默认debug
 if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Debug")
 endif ()
 
-# 开启测试
-enable_testing()
+option(CMAKE_BUILD_TYPE "Build Type" "Debug")
+option(ENABLE_TESTING "Enable Testing" ON)
+
+if(ENABLE_TESTING)
+    enable_testing()
+    message(STATUS "Building with testing enabled")
+else()
+    disable_testing()
+    message(STATUS "Building with testing disabled")
+endif()
 
 # 平台相关
 if (MSVC)

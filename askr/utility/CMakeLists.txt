@@ -40,3 +40,7 @@ target_link_libraries(askr_utility
 	PRIVATE
 	fmt::fmt
 )
+
+if(ENABLE_TESTING)
+	add_subdirectory(test)
+endif()
