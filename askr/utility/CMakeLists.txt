@@ -7,6 +7,7 @@ include_directories(${FMT_INCLUDE_DIRS})
 set(utility_SRCS
 	base64.h
 	base64.cpp
+	crc.h
 	expected.h
 	hash.h
 	ioc_container.h
@@ -23,6 +24,7 @@ set(utility_SRCS
 )
 
 set(utility_detail_SRCS
+	detail/crc_table.h
 	detail/string.h
 	detail/ioc_container.h
 	detail/base64.h
