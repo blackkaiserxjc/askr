@@ -26,7 +26,7 @@ public:
     ~crc() noexcept = default;
 
     /**
-     * @brief 重置.
+     * 重置状态
      */
     void reset()
     {
@@ -34,22 +34,43 @@ public:
     }
 
     /**
-     * 整数更新
-     * @param value 数据
+     * 数值类型更新
+     * @param b 单字节
      */
-    template <typename T, typename std::enable_if_t<std::is_integral<T>::value, int> = 0>
-    constexpr void update(T value) noexcept
+    constexpr void update(std::byte b)
+    {
+        update(static_cast<std::uint8_t>(b));
+    }
+
+    /**
+     * 数值类型更新
+     * @param value 数值
+     */
+    template <typename T>
+    constexpr std::enable_if_t<std::is_integral_v<T> && std::is_signed_v<T>>
+    update(T value) noexcept
+    {
+        update(std::make_unsigned_t<T>(value));
+    }
+
+    /**
+     * 数值类型更新
+     * @param value 数值
+     */
+    template <typename T>
+    constexpr std::enable_if_t<std::is_integral_v<T> && std::is_unsigned_v<T>>
+    update(T value) noexcept
     {
         [&]<std::size_t... N>(std::index_sequence<N...>)
         {
-            ((rem_ = detail::crc_table<Bits>::update(rem_, (value >> N * CHAR_BIT) & 0xff)), ...);
+            ((rem_ = detail::crc_table<Bits>::update(rem_, static_cast<std::uint8_t>(value >> N * CHAR_BIT))), ...);
         }
         (std::make_index_sequence<sizeof(T)>{});
     }
 
     /**
-     * 浮点数更新
-     * @param value 数据
+     * 数值类型更新
+     * @param value 数值
      */
     constexpr void update(float value) noexcept
     {
@@ -61,6 +82,10 @@ public:
         update(static_cast<uint32_t>(u.i));
     }
 
+    /**
+     * 数值类型更新
+     * @param value 数值
+     */
     constexpr void update(double value) noexcept
     {
         union
