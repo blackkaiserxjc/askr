@@ -1,6 +1,7 @@
 #pragma once
 
 #include <climits>
+#include <concepts>
 
 #include <askr/utility/detail/crc_table.h>
 
@@ -47,8 +48,8 @@ public:
      * @param value 数值
      */
     template <typename T>
-    constexpr std::enable_if_t<std::is_integral_v<T> && std::is_signed_v<T>>
-    update(T value) noexcept
+    requires std::signed_integral<T>
+    constexpr void update(T value) noexcept
     {
         update(std::make_unsigned_t<T>(value));
     }
@@ -58,8 +59,8 @@ public:
      * @param value 数值
      */
     template <typename T>
-    constexpr std::enable_if_t<std::is_integral_v<T> && std::is_unsigned_v<T>>
-    update(T value) noexcept
+    requires std::unsigned_integral<T>
+    constexpr void update(T value) noexcept
     {
         [&]<std::size_t... N>(std::index_sequence<N...>)
         {
