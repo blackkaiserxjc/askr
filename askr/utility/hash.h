@@ -4,7 +4,7 @@
 #include <cstdint>
 #include <string_view>
 
-#include <boost/crc.hpp>
+#include <askr/utility/crc.h>
 
 namespace askr {
 /**
@@ -12,10 +12,10 @@ namespace askr {
  * @param sv 字符串
  * @return   哈希值
  */
-inline std::uint32_t hash_str(std::string_view sv)
+inline constexpr std::uint32_t hash_str(std::string_view sv)
 {
-    boost::crc_32_type result;
-    result.process_bytes(sv.data(), sv.length());
+    crc32_type result;
+    result.update(sv);
     return result.checksum();
 }
 } // namespace askr

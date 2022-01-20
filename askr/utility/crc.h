@@ -136,4 +136,7 @@ private:
     value_type rem_;
 };
 
+using crc16_type = crc<16>;
+using crc32_type = crc<32>;
+
 } // namespace askr

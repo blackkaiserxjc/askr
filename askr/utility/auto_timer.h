@@ -16,11 +16,11 @@ public:
     using value_type = std::chrono::duration<double>;
 
     /**
-   * 构造函数
-   * @param msg
-   * @param min_time_to_log
-   * @param logger
-   */
+     * 构造函数
+     * @param msg
+     * @param min_time_to_log
+     * @param logger
+     */
     explicit basic_auto_timer(
         std::string &&msg = "",
         const value_type &min_time_to_log = value_type::zero(),
@@ -34,18 +34,18 @@ public:
     basic_auto_timer &operator=(const basic_auto_timer &) = delete;
 
     /**
-   * 日志
-   * @param msg   信息
-   * @return      间隔时间
-   */
+     * 日志
+     * @param msg   信息
+     * @return      间隔时间
+     */
     auto log(std::string_view msg = "");
 
     /**
-   * 格式化日志
-   * @param format 格式串
-   * @param args   变参数集
-   * @return       间隔时间
-   */
+     * 格式化日志
+     * @param format 格式串
+     * @param args   变参数集
+     * @return       间隔时间
+     */
     template <class... Args>
     auto log_format(std::string_view fmt, Args &&...args);
 
@@ -70,19 +70,19 @@ private:
 struct logger final
 {
     /**
-   * 构造函数
-   */
+     * @brief 构造函数
+     */
     logger();
     /**
-   * 重载括号
-   * @param msg  日志信息
-   * @param sec  时间间隔
-   */
+     * @brief 重载括号
+     * @param msg  日志信息
+     * @param sec  时间间隔
+     */
     void operator()(std::string_view msg,
         const std::chrono::duration<double> &sec) const;
 
     // 日志器
-    //mutable kr::log::logger_mt logger_;
+    // mutable kr::log::logger_mt logger_;
 };
 
 // 外部使用类型

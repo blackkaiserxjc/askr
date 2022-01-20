@@ -9,6 +9,9 @@ BOOST_AUTO_TEST_CASE(BasicTestCase)
 {
     BOOST_CHECK_EQUAL(askr::hash_str("42"), 0x3224B088);
     BOOST_CHECK_EQUAL(askr::hash_str("hello world"), 0x0D4A1185);
+
+    static_assert(askr::hash_str("42") == 0x3224B088);
+    static_assert(askr::hash_str("hello world") == 0x0D4A1185);
 }
 
 BOOST_AUTO_TEST_CASE(MurmurHashTestCase)
