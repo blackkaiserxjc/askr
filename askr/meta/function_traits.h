@@ -4,7 +4,7 @@
 #include <tuple>
 #include <type_traits>
 
-namespace akr {
+namespace askr {
 
 template <typename T>
 struct function_traits_impl;
@@ -29,4 +29,61 @@ struct function_traits_impl<Ret(Args...)>
         using type = typename std::tuple_element<I, args_type_t>::type;
     };
 };
-} // namespace akr
+
+template <size_t I, typename Function>
+using arg_type = typename function_traits<Function>::template args<I>::type;
+
+// function pointer
+template <typename R, typename... Args>
+struct function_traits_impl<R (*)(Args...)> : function_traits<R(Args...)>
+{
+};
+
+// std::function
+template <typename R, typename... Args>
+struct function_traits_impl<std::function<R(Args...)>> : function_traits_impl<R(Args...)>
+{
+};
+
+// member function
+template <typename R, typename T, typename... Args>
+struct function_traits_impl<R (T::*)(Args...)> : function_traits_impl<R(Args...)>
+{
+};
+
+template <typename R, typename T, typename... Args>
+struct function_traits_impl<R (T::*)(Args...) const> : function_traits_impl<R(Args...)>
+{
+};
+
+template <typename R, typename T, typename... Args>
+struct function_traits_impl<R (T::*)(Args...) volatile> : function_traits_impl<R(Args...)>
+{
+};
+
+template <typename R, typename T, typename... Args>
+struct function_traits_impl<R (T::*)(Args...) const volatile> : function_traits_impl<R(Args...)>
+{
+};
+
+// functor
+template <typename Callable>
+struct function_traits_impl : function_traits_impl<decltype(&Callable::operator())>
+{
+};
+
+template <typename Function>
+auto to_function(const Function &lambda)
+{
+    using function_type = typename function_traits<Function>::function_type;
+    return static_cast<function_type>(lambda);
+}
+
+template <typename Function>
+auto to_function(Function &&lambda)
+{
+    using function_type = typename function_traits<Function>::function_type;
+    return static_cast<function_type>(std::forward<Function>(lambda));
+}
+
+} // namespace askr
